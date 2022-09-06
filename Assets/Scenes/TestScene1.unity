@@ -925,10 +925,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4672558306892028913, guid: 93ed95104890144478ea7f51c8daaa7c, type: 3}
-      propertyPath: m_Drag
-      value: 3.5
-      objectReference: {fileID: 0}
     - target: {fileID: 9033983363266837301, guid: 93ed95104890144478ea7f51c8daaa7c, type: 3}
       propertyPath: m_Name
       value: Capsule
