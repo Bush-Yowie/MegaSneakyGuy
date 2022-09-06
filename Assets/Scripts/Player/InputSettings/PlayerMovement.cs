@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-public class PlayerController : MonoBehaviour
+public class PlayerMovement : MonoBehaviour
 {
     //Input Fields
     private PlayerContoller playerActionsAsset;
@@ -54,6 +54,19 @@ public class PlayerController : MonoBehaviour
         horizontalVelocity.y = 0;
         if (horizontalVelocity.sqrMagnitude > maxspeed * maxspeed)
             rb.velocity = horizontalVelocity.normalized * maxspeed + Vector3.up * rb.velocity.y;
+
+        LookAt();
+
+    }
+    private void LookAt()
+    {
+        Vector3 direction = rb.velocity;
+        direction.y = 0f;
+
+        if (move.ReadValue<Vector2>().sqrMagnitude > 0.1f && direction.sqrMagnitude > 0.1f)
+            this.rb.rotation = Quaternion.LookRotation(direction, Vector3.up);
+        else
+            rb.angularVelocity = Vector3.zero;
     }
 
     private Vector3 GetCameraForward(Camera playerCamera)
