@@ -19,7 +19,7 @@
                     "id": "716c5cc7-0d77-4082-bdde-95e8a77094fc",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "Press"
                 },
                 {
                     "name": "Aim",

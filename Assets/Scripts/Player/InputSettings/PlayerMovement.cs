@@ -38,7 +38,7 @@ public class PlayerMovement : MonoBehaviour
     {
         playerActionsAsset.Player.Disable();
     }
-
+   
     private void FixedUpdate()
     {
         forceDirection += move.ReadValue<Vector2>().x * GetCameraRight(playerCamera) * movementForce;
@@ -57,6 +57,13 @@ public class PlayerMovement : MonoBehaviour
 
         LookAt();
 
+    }
+
+    public void crouch()
+    {
+       Vector3 scale = GetComponent<Transform>().localScale;
+        scale.y = 0.5f;
+        GetComponent<Transform>().localScale = scale;
     }
     private void LookAt()
     {
