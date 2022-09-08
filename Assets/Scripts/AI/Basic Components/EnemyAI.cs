@@ -15,6 +15,12 @@ public class EnemyAI: MonoBehaviour
     public Transform[] patrolPoints;
     [Tooltip("Patrol Point Index")]
     public int patrolPointIndex;
+    [Tooltip("Ignore Patrol")]
+    public bool ignorePatrol;
+    [Tooltip("Patrol Point Wait Time")]
+    public float patrolPointWait;
+    [Tooltip("At Patrol Point")]
+    public bool atPatrolPoint;
 
 
 
@@ -36,19 +42,44 @@ public class EnemyAI: MonoBehaviour
 
     private void Awake()
     {
-        //player = GameObject.FindGameObjectWithTag("Player").transform;
+
         agent = GetComponent<NavMeshAgent>();
-        Patrolling();
-        //NextPatrolPoint();
+        if(!ignorePatrol)
+        {
+            Patrolling();
+        }
     }
 
     private void Update()
     {
-        if (Vector3.Distance(transform.position, target) < 1)
+        if (!ignorePatrol)
         {
-            NextPatrolPoint();
-            Patrolling();
+            if (!atPatrolPoint)
+            {
+                if (Vector3.Distance(transform.position, target) < 1)
+                {
+                    atPatrolPoint = true;
+
+                    NextPatrolPoint();
+
+                    Patrolling();
+
+                    Invoke(nameof(ResetPatrolWait), patrolPointWait);
+                }
+            }
         }
+        //switch (aggressionState)
+        //{
+       //     case 0:
+
+                
+       //         break;
+
+       //     case 1:
+
+        //        break;
+     //   }
+        
         //playerInSightRange = Physics.CheckSphere(transform.position, sightRange, whatIsPlayer);
         // playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
 
@@ -71,30 +102,13 @@ public class EnemyAI: MonoBehaviour
 
     private void MoveTo()
     {
-       // agent.SetDestination(target);
+        agent.SetDestination(target);
     }
 
     private void Patrolling()
     {
         target = patrolPoints[patrolPointIndex].position;
-        agent.SetDestination(target);
-        // if (!patrolPointSet)
-        // {
-        //SearchWalkPoint();
-        // }
-
-        //  if (patrolPointSet)
-        //  {
-        //      agent.SetDestination(walkPoint);
-        // }
-
-        // Vector3 distanceToWalkPoint = transform.position - walkPoint;
-
-        //checks to see if at patrol point
-        //  if (distanceToWalkPoint.magnitude < 1f)
-        //  {
-        //      patrolPointSet = false;
-        //   }
+        MoveTo();
     }
 
     private void NextPatrolPoint()
@@ -105,6 +119,11 @@ public class EnemyAI: MonoBehaviour
         {
             patrolPointIndex = 0;
         }
+    }
+
+    private void ResetPatrolWait()
+    {
+        atPatrolPoint = false;
     }
 
     // private void SearchWalkPoint()
