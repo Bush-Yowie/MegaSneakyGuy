@@ -32,7 +32,7 @@ public class @PlayerControl : IInputActionCollection, IDisposable
                     ""id"": ""716c5cc7-0d77-4082-bdde-95e8a77094fc"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": ""Press""
+                    ""interactions"": ""Hold""
                 },
                 {
                     ""name"": ""Aim"",
@@ -148,7 +148,7 @@ public class @PlayerControl : IInputActionCollection, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""0c3a3c17-88dd-4c52-9f67-1fedba532c06"",
-                    ""path"": ""<Keyboard>/space"",
+                    ""path"": ""<Keyboard>/c"",
                     ""interactions"": ""Hold"",
                     ""processors"": """",
                     ""groups"": """",
@@ -236,7 +236,7 @@ public class @PlayerControl : IInputActionCollection, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""2e7321f8-d737-4504-bcd3-91de895fe02d"",
-                    ""path"": ""<Keyboard>/space"",
+                    ""path"": ""<Keyboard>/c"",
                     ""interactions"": ""Tap"",
                     ""processors"": """",
                     ""groups"": """",

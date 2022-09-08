@@ -20,10 +20,13 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     private Camera playerCamera;
 
+
     private void Awake()
     {
         rb = this.GetComponent<Rigidbody>();
         playerActionsAsset = new PlayerControl();
+        playerActionsAsset.Player.Crouch.performed += context => crouch();
+        playerActionsAsset.Player.UnCrouch.performed += context => UnCrouch();
 
 
     }
@@ -56,27 +59,31 @@ public class PlayerMovement : MonoBehaviour
             rb.velocity = horizontalVelocity.normalized * maxspeed + Vector3.up * rb.velocity.y;
 
 
-        playerActionsAsset.Player.Crouch.performed += context => crouch() ;
-        playerActionsAsset.Player.UnCrouch.performed += context => UnCrouch();
         LookAt();
 
     }
 
-    public void crouch()
+
+
+    private void crouch()
     {
         Vector3 scale = GetComponent<Transform>().localScale;
         scale.y = 0.5f;
         GetComponent<Transform>().localScale = scale;
-
+        Debug.Log("crouch");
+        maxspeed = 1;
         
     }
 
     private void UnCrouch()
     {
-        Vector3 unscale = GetComponent<Transform>().localScale;
-        unscale.y = 1f;
-        GetComponent<Transform>().localScale = unscale;
+        Vector3 scale = GetComponent<Transform>().localScale;
+        scale.y = 1f;
+        GetComponent<Transform>().localScale = scale;
+        Debug.Log("uncrouch");
+        maxspeed = 5;
     }
+
 
     private void LookAt()
     {
