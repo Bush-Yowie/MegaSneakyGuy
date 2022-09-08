@@ -44,6 +44,14 @@
                     "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "UnCrouch",
+                    "type": "Button",
+                    "id": "e8eb2138-b5b7-44a1-b1a8-5e69de1c1f2e",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -117,7 +125,7 @@
                     "name": "",
                     "id": "7987893c-806b-49d8-800c-6924e26a87a3",
                     "path": "<Gamepad>/buttonSouth",
-                    "interactions": "",
+                    "interactions": "Hold",
                     "processors": "",
                     "groups": "",
                     "action": "Crouch",
@@ -128,7 +136,7 @@
                     "name": "",
                     "id": "0c3a3c17-88dd-4c52-9f67-1fedba532c06",
                     "path": "<Keyboard>/space",
-                    "interactions": "",
+                    "interactions": "Hold",
                     "processors": "",
                     "groups": "",
                     "action": "Crouch",
@@ -198,6 +206,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "LookAround",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a023536a-ba56-47fd-8419-80d35c0535b9",
+                    "path": "<Gamepad>/buttonSouth",
+                    "interactions": "Tap",
+                    "processors": "",
+                    "groups": "",
+                    "action": "UnCrouch",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "2e7321f8-d737-4504-bcd3-91de895fe02d",
+                    "path": "<Keyboard>/space",
+                    "interactions": "Tap",
+                    "processors": "",
+                    "groups": "",
+                    "action": "UnCrouch",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

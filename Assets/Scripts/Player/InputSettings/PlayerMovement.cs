@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 public class PlayerMovement : MonoBehaviour
 {
     //Input Fields
-    private PlayerContoller playerActionsAsset;
+    private PlayerControl playerActionsAsset;
     private InputAction move;
 
     //movement fields
@@ -23,7 +23,7 @@ public class PlayerMovement : MonoBehaviour
     private void Awake()
     {
         rb = this.GetComponent<Rigidbody>();
-        playerActionsAsset = new PlayerContoller();
+        playerActionsAsset = new PlayerControl();
 
 
     }
@@ -55,16 +55,29 @@ public class PlayerMovement : MonoBehaviour
         if (horizontalVelocity.sqrMagnitude > maxspeed * maxspeed)
             rb.velocity = horizontalVelocity.normalized * maxspeed + Vector3.up * rb.velocity.y;
 
+
+        playerActionsAsset.Player.Crouch.performed += context => crouch() ;
+        playerActionsAsset.Player.UnCrouch.performed += context => UnCrouch();
         LookAt();
 
     }
 
     public void crouch()
     {
-       Vector3 scale = GetComponent<Transform>().localScale;
+        Vector3 scale = GetComponent<Transform>().localScale;
         scale.y = 0.5f;
         GetComponent<Transform>().localScale = scale;
+
+        
     }
+
+    private void UnCrouch()
+    {
+        Vector3 unscale = GetComponent<Transform>().localScale;
+        unscale.y = 1f;
+        GetComponent<Transform>().localScale = unscale;
+    }
+
     private void LookAt()
     {
         Vector3 direction = rb.velocity;

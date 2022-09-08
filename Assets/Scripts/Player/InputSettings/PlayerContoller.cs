@@ -6,10 +6,10 @@ using System.Collections.Generic;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Utilities;
 
-public class @PlayerContoller : IInputActionCollection, IDisposable
+public class @PlayerControl : IInputActionCollection, IDisposable
 {
     public InputActionAsset asset { get; }
-    public @PlayerContoller()
+    public @PlayerControl()
     {
         asset = InputActionAsset.FromJson(@"{
     ""name"": ""PlayerContoller"",
@@ -32,7 +32,7 @@ public class @PlayerContoller : IInputActionCollection, IDisposable
                     ""id"": ""716c5cc7-0d77-4082-bdde-95e8a77094fc"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": """"
+                    ""interactions"": ""Press""
                 },
                 {
                     ""name"": ""Aim"",
@@ -55,6 +55,14 @@ public class @PlayerContoller : IInputActionCollection, IDisposable
                     ""type"": ""PassThrough"",
                     ""id"": ""177e3065-9780-4024-984c-f7f20cf6d617"",
                     ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""UnCrouch"",
+                    ""type"": ""Button"",
+                    ""id"": ""e8eb2138-b5b7-44a1-b1a8-5e69de1c1f2e"",
+                    ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
                 }
@@ -130,7 +138,7 @@ public class @PlayerContoller : IInputActionCollection, IDisposable
                     ""name"": """",
                     ""id"": ""7987893c-806b-49d8-800c-6924e26a87a3"",
                     ""path"": ""<Gamepad>/buttonSouth"",
-                    ""interactions"": """",
+                    ""interactions"": ""Hold"",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Crouch"",
@@ -141,7 +149,7 @@ public class @PlayerContoller : IInputActionCollection, IDisposable
                     ""name"": """",
                     ""id"": ""0c3a3c17-88dd-4c52-9f67-1fedba532c06"",
                     ""path"": ""<Keyboard>/space"",
-                    ""interactions"": """",
+                    ""interactions"": ""Hold"",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Crouch"",
@@ -213,6 +221,28 @@ public class @PlayerContoller : IInputActionCollection, IDisposable
                     ""action"": ""LookAround"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a023536a-ba56-47fd-8419-80d35c0535b9"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": ""Tap"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""UnCrouch"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2e7321f8-d737-4504-bcd3-91de895fe02d"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": ""Tap"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""UnCrouch"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -226,6 +256,7 @@ public class @PlayerContoller : IInputActionCollection, IDisposable
         m_Player_Aim = m_Player.FindAction("Aim", throwIfNotFound: true);
         m_Player_Attack = m_Player.FindAction("Attack", throwIfNotFound: true);
         m_Player_LookAround = m_Player.FindAction("LookAround", throwIfNotFound: true);
+        m_Player_UnCrouch = m_Player.FindAction("UnCrouch", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -280,15 +311,17 @@ public class @PlayerContoller : IInputActionCollection, IDisposable
     private readonly InputAction m_Player_Aim;
     private readonly InputAction m_Player_Attack;
     private readonly InputAction m_Player_LookAround;
+    private readonly InputAction m_Player_UnCrouch;
     public struct PlayerActions
     {
-        private @PlayerContoller m_Wrapper;
-        public PlayerActions(@PlayerContoller wrapper) { m_Wrapper = wrapper; }
+        private @PlayerControl m_Wrapper;
+        public PlayerActions(@PlayerControl wrapper) { m_Wrapper = wrapper; }
         public InputAction @Move => m_Wrapper.m_Player_Move;
         public InputAction @Crouch => m_Wrapper.m_Player_Crouch;
         public InputAction @Aim => m_Wrapper.m_Player_Aim;
         public InputAction @Attack => m_Wrapper.m_Player_Attack;
         public InputAction @LookAround => m_Wrapper.m_Player_LookAround;
+        public InputAction @UnCrouch => m_Wrapper.m_Player_UnCrouch;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -313,6 +346,9 @@ public class @PlayerContoller : IInputActionCollection, IDisposable
                 @LookAround.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLookAround;
                 @LookAround.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLookAround;
                 @LookAround.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLookAround;
+                @UnCrouch.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnUnCrouch;
+                @UnCrouch.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnUnCrouch;
+                @UnCrouch.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnUnCrouch;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -332,6 +368,9 @@ public class @PlayerContoller : IInputActionCollection, IDisposable
                 @LookAround.started += instance.OnLookAround;
                 @LookAround.performed += instance.OnLookAround;
                 @LookAround.canceled += instance.OnLookAround;
+                @UnCrouch.started += instance.OnUnCrouch;
+                @UnCrouch.performed += instance.OnUnCrouch;
+                @UnCrouch.canceled += instance.OnUnCrouch;
             }
         }
     }
@@ -343,5 +382,6 @@ public class @PlayerContoller : IInputActionCollection, IDisposable
         void OnAim(InputAction.CallbackContext context);
         void OnAttack(InputAction.CallbackContext context);
         void OnLookAround(InputAction.CallbackContext context);
+        void OnUnCrouch(InputAction.CallbackContext context);
     }
 }
