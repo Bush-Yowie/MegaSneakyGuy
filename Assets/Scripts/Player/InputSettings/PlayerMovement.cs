@@ -20,6 +20,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     private Camera playerCamera;
 
+    public Gun gun;
+
 
     private void Awake()
     {
@@ -27,7 +29,7 @@ public class PlayerMovement : MonoBehaviour
         playerActionsAsset = new PlayerControl();
         playerActionsAsset.Player.Crouch.performed += context => crouch();
         playerActionsAsset.Player.UnCrouch.performed += context => UnCrouch();
-
+        playerActionsAsset.Player.Attack.performed += context => Shoot();
 
     }
 
@@ -63,7 +65,10 @@ public class PlayerMovement : MonoBehaviour
 
     }
 
-
+    private void Shoot()
+    {
+        gun.Shoot();
+    }
 
     private void crouch()
     {

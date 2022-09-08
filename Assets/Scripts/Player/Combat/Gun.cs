@@ -42,7 +42,7 @@ public class Gun : MonoBehaviour
 
     void Start()
     {
-        muzzleOffset = GetComponent<Renderer>().bounds.extents.z;
+        muzzleOffset = GetComponent<Renderer>().bounds.extents.z + 0.5f;
         remainingAmmunition = ammunition;
     }
 
