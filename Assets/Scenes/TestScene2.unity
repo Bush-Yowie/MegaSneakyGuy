@@ -149,8 +149,7 @@ MonoBehaviour:
   - {fileID: 232973006}
   patrolPointIndex: 0
   ignorePatrol: 0
-  patrolPointWait: 7.5
-  atPatrolPoint: 0
+  patrolPointWait: 5
 --- !u!195 &71364412
 NavMeshAgent:
   m_ObjectHideFlags: 0
