@@ -72,9 +72,9 @@ public class PlayerMovement : MonoBehaviour
 
     private void crouch()
     {
-        Vector3 scale = GetComponent<Transform>().localScale;
-        scale.y = 0.5f;
-        GetComponent<Transform>().localScale = scale;
+        float scale = GetComponent<CapsuleCollider>().height;
+        scale = 0.5f;
+        GetComponent<CapsuleCollider>().height = scale;
         Debug.Log("crouch");
         maxspeed = 1;
         
@@ -82,9 +82,9 @@ public class PlayerMovement : MonoBehaviour
 
     private void UnCrouch()
     {
-        Vector3 scale = GetComponent<Transform>().localScale;
-        scale.y = 1f;
-        GetComponent<Transform>().localScale = scale;
+        float scale = GetComponent<CapsuleCollider>().height;
+        scale = 1f;
+        GetComponent<CapsuleCollider>().height = scale;
         Debug.Log("uncrouch");
         maxspeed = 5;
     }
