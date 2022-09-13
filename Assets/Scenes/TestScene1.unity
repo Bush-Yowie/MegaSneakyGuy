@@ -1064,6 +1064,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3650636914130494827, guid: 93ed95104890144478ea7f51c8daaa7c, type: 3}
+      propertyPath: m_Height
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3650636914130494827, guid: 93ed95104890144478ea7f51c8daaa7c, type: 3}
+      propertyPath: m_Radius
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6720801737591525678, guid: 93ed95104890144478ea7f51c8daaa7c, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 814b511324d4c0d468d357ef6e97dc34, type: 2}
     - target: {fileID: 9033983363266837301, guid: 93ed95104890144478ea7f51c8daaa7c, type: 3}
       propertyPath: m_Name
       value: Capsule
