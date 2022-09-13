@@ -39,7 +39,7 @@ public class PlayerMovement : MonoBehaviour
         playerActionsAsset.Player.UnCrouch.performed += context => UnCrouch();
         playerActionsAsset.Player.Attack.performed += context => Shoot();
         playerActionsAsset.Player.Aim.performed += context => Aim();
-        playerActionsAsset.Player.Aim.performed += context => aiming = true;
+        //playerActionsAsset.Player.Aim.realse 
 
 
         _vcams[1].SetActive(false);
@@ -57,7 +57,8 @@ public class PlayerMovement : MonoBehaviour
     {
         playerActionsAsset.Player.Disable();
     }
-   
+
+
     private void FixedUpdate()
     {
         forceDirection += move.ReadValue<Vector2>().x * GetCameraRight(playerCamera) * movementForce;
@@ -76,16 +77,17 @@ public class PlayerMovement : MonoBehaviour
 
         if (aiming == true)
         {
-            playerActionsAsset.Player.Aim.performed += context => aiming = false;
+            
             maxspeed = 0;
             gun.gameObject.SetActive(true);
+            Debug.Log("aiming");
         }
         else
         {
             maxspeed = 5;
             _vcams[1].SetActive(false);
             gun.gameObject.SetActive(false);
-  
+            Debug.Log("NotAming");
         }
 
 
@@ -106,6 +108,8 @@ public class PlayerMovement : MonoBehaviour
             _vcams[1].SetActive(true);
 
         }
+        Debug.Log("Aim");
+
     }
     private void Shoot()
     {
