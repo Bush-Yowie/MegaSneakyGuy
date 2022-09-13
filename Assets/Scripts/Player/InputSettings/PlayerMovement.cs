@@ -20,7 +20,15 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     private Camera playerCamera;
 
+    [SerializeField] private GameObject[] _vcams = new GameObject[5];
+
+    [SerializeField] private int[] _vcamsID = new int[] { 0, 1, 2, 3, 4, 5 };
+
     public Gun gun;
+
+    private bool aiming = false;
+
+
 
 
     private void Awake()
@@ -30,6 +38,12 @@ public class PlayerMovement : MonoBehaviour
         playerActionsAsset.Player.Crouch.performed += context => crouch();
         playerActionsAsset.Player.UnCrouch.performed += context => UnCrouch();
         playerActionsAsset.Player.Attack.performed += context => Shoot();
+        playerActionsAsset.Player.Aim.performed += context => Aim();
+        playerActionsAsset.Player.Aim.performed += context => aiming = true;
+
+
+        _vcams[1].SetActive(false);
+
 
     }
 
@@ -60,11 +74,39 @@ public class PlayerMovement : MonoBehaviour
         if (horizontalVelocity.sqrMagnitude > maxspeed * maxspeed)
             rb.velocity = horizontalVelocity.normalized * maxspeed + Vector3.up * rb.velocity.y;
 
+        if (aiming == true)
+        {
+            playerActionsAsset.Player.Aim.performed += context => aiming = false;
+            maxspeed = 0;
+            gun.gameObject.SetActive(true);
+        }
+        else
+        {
+            maxspeed = 5;
+            _vcams[1].SetActive(false);
+            gun.gameObject.SetActive(false);
+  
+        }
+
+
+
+
+
+
 
         LookAt();
 
     }
 
+    private void Aim()
+    {
+        aiming = true;
+        for (int i = 0; i <_vcams.Length; i++)
+        {
+            _vcams[1].SetActive(true);
+
+        }
+    }
     private void Shoot()
     {
         gun.Shoot();
@@ -72,6 +114,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void crouch()
     {
+
         float scale = GetComponent<CapsuleCollider>().height;
         scale = 0.5f;
         GetComponent<CapsuleCollider>().height = scale;
@@ -82,6 +125,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void UnCrouch()
     {
+
         float scale = GetComponent<CapsuleCollider>().height;
         scale = 1f;
         GetComponent<CapsuleCollider>().height = scale;

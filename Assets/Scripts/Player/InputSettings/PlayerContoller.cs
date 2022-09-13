@@ -65,6 +65,14 @@ public class @PlayerControl : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Mouse"",
+                    ""type"": ""Button"",
+                    ""id"": ""510d3207-2d37-41b4-9972-a9868efe96ad"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -243,6 +251,17 @@ public class @PlayerControl : IInputActionCollection, IDisposable
                     ""action"": ""UnCrouch"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4c9867e2-77fa-43d2-900f-e2bde7b031fb"",
+                    ""path"": ""<Mouse>"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Mouse"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -257,6 +276,7 @@ public class @PlayerControl : IInputActionCollection, IDisposable
         m_Player_Attack = m_Player.FindAction("Attack", throwIfNotFound: true);
         m_Player_LookAround = m_Player.FindAction("LookAround", throwIfNotFound: true);
         m_Player_UnCrouch = m_Player.FindAction("UnCrouch", throwIfNotFound: true);
+        m_Player_Mouse = m_Player.FindAction("Mouse", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -312,6 +332,7 @@ public class @PlayerControl : IInputActionCollection, IDisposable
     private readonly InputAction m_Player_Attack;
     private readonly InputAction m_Player_LookAround;
     private readonly InputAction m_Player_UnCrouch;
+    private readonly InputAction m_Player_Mouse;
     public struct PlayerActions
     {
         private @PlayerControl m_Wrapper;
@@ -322,6 +343,7 @@ public class @PlayerControl : IInputActionCollection, IDisposable
         public InputAction @Attack => m_Wrapper.m_Player_Attack;
         public InputAction @LookAround => m_Wrapper.m_Player_LookAround;
         public InputAction @UnCrouch => m_Wrapper.m_Player_UnCrouch;
+        public InputAction @Mouse => m_Wrapper.m_Player_Mouse;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -349,6 +371,9 @@ public class @PlayerControl : IInputActionCollection, IDisposable
                 @UnCrouch.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnUnCrouch;
                 @UnCrouch.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnUnCrouch;
                 @UnCrouch.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnUnCrouch;
+                @Mouse.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMouse;
+                @Mouse.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMouse;
+                @Mouse.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMouse;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -371,6 +396,9 @@ public class @PlayerControl : IInputActionCollection, IDisposable
                 @UnCrouch.started += instance.OnUnCrouch;
                 @UnCrouch.performed += instance.OnUnCrouch;
                 @UnCrouch.canceled += instance.OnUnCrouch;
+                @Mouse.started += instance.OnMouse;
+                @Mouse.performed += instance.OnMouse;
+                @Mouse.canceled += instance.OnMouse;
             }
         }
     }
@@ -383,5 +411,6 @@ public class @PlayerControl : IInputActionCollection, IDisposable
         void OnAttack(InputAction.CallbackContext context);
         void OnLookAround(InputAction.CallbackContext context);
         void OnUnCrouch(InputAction.CallbackContext context);
+        void OnMouse(InputAction.CallbackContext context);
     }
 }
