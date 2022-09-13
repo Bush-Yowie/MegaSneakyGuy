@@ -5,9 +5,6 @@ using UnityEngine.AI;
 
 public class EnemyAI: MonoBehaviour
 {
-   // [Header("General")]
-    //public Transform player;
-
     [Header("Movement + Patrolling")]
     [Tooltip("Navmesh Agent")]
     public NavMeshAgent agent;
@@ -15,86 +12,76 @@ public class EnemyAI: MonoBehaviour
     public Transform[] patrolPoints;
     [Tooltip("Patrol Point Index")]
     public int patrolPointIndex;
-
-
-
-
-
-    //public LayerMask whatIsGround, whatIsPlayer;
-
-    //public Vector3 walkPoint;
-    //bool patrolPointSet;
-    //public float walkPointRange;
-
-    //public float attackCooldown;
-    //bool hasAttacked;
-
-    //public float sightRange, attackRange;
-    //public bool playerInSightRange, playerInAttackRange;
+    [Tooltip("Ignore Patrol")]
+    public bool ignorePatrol;
+    [Tooltip("Patrol Point Wait Time")]
+    public float patrolPointWait;
 
     Vector3 target;
+    float waitTimer;
+    bool movingOn;
 
     private void Awake()
     {
-        //player = GameObject.FindGameObjectWithTag("Player").transform;
         agent = GetComponent<NavMeshAgent>();
-        Patrolling();
-        //NextPatrolPoint();
+
+        waitTimer = patrolPointWait;
+        movingOn = false;
+
+        if(!ignorePatrol)
+        {
+            GoToPatrolPoint();
+        }
     }
 
     private void Update()
     {
-        if (Vector3.Distance(transform.position, target) < 1)
+        if (!ignorePatrol)
         {
-            NextPatrolPoint();
             Patrolling();
         }
-        //playerInSightRange = Physics.CheckSphere(transform.position, sightRange, whatIsPlayer);
-        // playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
-
-        //  if (!playerInSightRange && !playerInAttackRange)
-        //  {
-        //       Patrolling();
-        //  }
-
-        //  if(playerInSightRange && !playerInAttackRange)
-        //   {
-        //       CombatChasing();
-        //   }
-
-        //   if(playerInSightRange && playerInAttackRange)
-        //   {
-        //       CombatShooting();
-        //   }
-
     }
 
     private void MoveTo()
     {
-       // agent.SetDestination(target);
+        agent.SetDestination(target);
+    }
+
+    private void StopMoving()
+    {
+        agent.SetDestination(transform.position);
     }
 
     private void Patrolling()
     {
+        //once ai has waited x time, go to next patrol point
+        if (Vector3.Distance(transform.position, target) < 1 && waitTimer <= 0)
+        {
+            //Debug.Log("AI wait count down has reached 0 or below, moving to next patrol point");
+            movingOn = true;
+            NextPatrolPoint();
+            GoToPatrolPoint();
+        }
+        //once ai is not at patrol point, reset wait timer
+        if (Vector3.Distance(transform.position, target) > 1 && movingOn)
+        {
+            //Debug.Log("AI has left previous patrol point, reseting timer");
+            movingOn = false;
+            waitTimer = patrolPointWait;
+        }
+        //when ai gets to patrol point, start waiting
+        if (Vector3.Distance(transform.position, target) < 1 && !movingOn)
+        {
+            //Debug.Log("AI has reached patrol point, starting count down");
+            waitTimer -= Time.deltaTime;
+            //Debug.Log("Wait timer is currently at: " + waitTimer);
+        }
+    }
+
+    private void GoToPatrolPoint()
+    {
         target = patrolPoints[patrolPointIndex].position;
-        agent.SetDestination(target);
-        // if (!patrolPointSet)
-        // {
-        //SearchWalkPoint();
-        // }
-
-        //  if (patrolPointSet)
-        //  {
-        //      agent.SetDestination(walkPoint);
-        // }
-
-        // Vector3 distanceToWalkPoint = transform.position - walkPoint;
-
-        //checks to see if at patrol point
-        //  if (distanceToWalkPoint.magnitude < 1f)
-        //  {
-        //      patrolPointSet = false;
-        //   }
+        MoveTo();
     }
 
     private void NextPatrolPoint()
@@ -106,20 +93,6 @@ public class EnemyAI: MonoBehaviour
             patrolPointIndex = 0;
         }
     }
-
-    // private void SearchWalkPoint()
-    // {
-    //     float randomZ = Random.Range(-walkPointRange, walkPointRange);
-    //     float randomX = Random.Range(-walkPointRange, walkPointRange);
-
-    //    walkPoint = new Vector3(transform.position.x + randomX, transform.position.y, transform.position.z + randomZ);
-    //
-    //    //checks if patrol point is out of bounds
-    //     if (Physics.Raycast(walkPoint, -transform.up, 2f, whatIsGround))
-    //     {
-    //         patrolPointSet = true;
-    //      }
-    //   }
 
     private void CombatChasing()
     {
@@ -141,14 +114,6 @@ public class EnemyAI: MonoBehaviour
         }
     }
 
-    private void ResetAttack()
-    {
-        //   hasAttacked = false;
-    }
-
-    private void Hunting()
-    {
-
-    }
+    
 }
 
