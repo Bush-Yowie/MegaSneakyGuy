@@ -51,7 +51,6 @@ public class EnemyAI: MonoBehaviour
     private void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
-        player = GameObject.FindGameObjectWithTag("Player");
 
         waitTimer = patrolPointWait;
         movingOn = false;
@@ -63,6 +62,11 @@ public class EnemyAI: MonoBehaviour
         }
 
         StartCoroutine(VisionRoutine());
+    }
+
+    private void Start()
+    {
+        player = GameObject.FindGameObjectWithTag("Player");
     }
 
     private void Update()

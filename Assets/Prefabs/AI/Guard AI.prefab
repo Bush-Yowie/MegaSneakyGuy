@@ -1482,7 +1482,7 @@ GameObject:
   - component: {fileID: 1859066705557103271}
   - component: {fileID: 646711436104180218}
   m_Layer: 0
-  m_Name: Guard AI 1
+  m_Name: Guard AI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1535,7 +1535,7 @@ MonoBehaviour:
   patrolPointIndex: 0
   agent: {fileID: 0}
   patrolPoints: []
-  ignorePatrol: 1
+  ignorePatrol: 0
   visAngle: 70
   visRange: 10
   visDelay: 0.2
