@@ -80,6 +80,7 @@ public class PlayerMovement : MonoBehaviour
             if (aiming == true)
             {
                 playerActionsAsset.Player.Aim.performed += context => aiming = false;
+                playerActionsAsset.Player.Aim.performed += context => maxspeed = 5;
             }
             maxspeed = 0;
             Debug.Log("aiming");
@@ -96,7 +97,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-            maxspeed = 5;
+
             _vcams[1].SetActive(false);
             Debug.Log("NotAming");
             playerActionsAsset.Player.Aim.performed += context => Aim();
@@ -131,9 +132,9 @@ public class PlayerMovement : MonoBehaviour
     private void crouch()
     {
 
-        float scale = GetComponent<CapsuleCollider>().height;
-        scale = 0.5f;
-        GetComponent<CapsuleCollider>().height = scale;
+        Vector3 scale = GetComponent<Transform>().localScale;
+        scale.y = 0.5f;
+        GetComponent<Transform>().localScale = scale;
         Debug.Log("crouch");
         maxspeed = 1;
         
@@ -142,9 +143,9 @@ public class PlayerMovement : MonoBehaviour
     private void UnCrouch()
     {
 
-        float scale = GetComponent<CapsuleCollider>().height;
-        scale = 1f;
-        GetComponent<CapsuleCollider>().height = scale;
+        Vector3 scale = GetComponent<Transform>().localScale;
+        scale.y = 1f;
+        GetComponent<Transform>().localScale = scale;
         Debug.Log("uncrouch");
         maxspeed = 5;
     }
