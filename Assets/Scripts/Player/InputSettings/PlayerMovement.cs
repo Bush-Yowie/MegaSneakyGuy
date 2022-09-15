@@ -28,7 +28,7 @@ public class PlayerMovement : MonoBehaviour
 
     private bool aiming = false;
 
-
+    private bool ray_hit_something = false;
 
 
     private void Awake()
@@ -38,7 +38,7 @@ public class PlayerMovement : MonoBehaviour
         playerActionsAsset.Player.Crouch.performed += context => crouch();
         playerActionsAsset.Player.UnCrouch.performed += context => UnCrouch();
         playerActionsAsset.Player.Attack.performed += context => Shoot();
-        playerActionsAsset.Player.Aim.performed += context => Aim();
+        //playerActionsAsset.Player.Aim.performed += context => Aim();
         //playerActionsAsset.Player.Aim.realse 
 
 
@@ -77,17 +77,29 @@ public class PlayerMovement : MonoBehaviour
 
         if (aiming == true)
         {
-            
+            if (aiming == true)
+            {
+                playerActionsAsset.Player.Aim.performed += context => aiming = false;
+            }
             maxspeed = 0;
-            gun.gameObject.SetActive(true);
             Debug.Log("aiming");
+
+            RaycastHit hit;
+            Ray ray = playerCamera.ScreenPointToRay(Mouse.current.position.ReadValue());
+
+            ray_hit_something = Physics.Raycast(ray, out hit);
+
+            if (ray_hit_something)
+            {
+                transform.LookAt(hit.point);
+            }
         }
         else
         {
             maxspeed = 5;
             _vcams[1].SetActive(false);
-            gun.gameObject.SetActive(false);
             Debug.Log("NotAming");
+            playerActionsAsset.Player.Aim.performed += context => Aim();
         }
 
 
