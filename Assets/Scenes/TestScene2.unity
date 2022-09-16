@@ -2298,7 +2298,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1859066705557103271, guid: 6328a6475eb80644e9e128cbc6dc23de, type: 3}
       propertyPath: detectDelay
-      value: 5
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 1859066705557103271, guid: 6328a6475eb80644e9e128cbc6dc23de, type: 3}
       propertyPath: ignorePatrol
@@ -2342,7 +2342,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6681996479929062451, guid: 6328a6475eb80644e9e128cbc6dc23de, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2.73
+      value: 5.628
       objectReference: {fileID: 0}
     - target: {fileID: 6681996479929062451, guid: 6328a6475eb80644e9e128cbc6dc23de, type: 3}
       propertyPath: m_LocalPosition.y
@@ -2350,7 +2350,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6681996479929062451, guid: 6328a6475eb80644e9e128cbc6dc23de, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 2.66
+      value: 6.625
       objectReference: {fileID: 0}
     - target: {fileID: 6681996479929062451, guid: 6328a6475eb80644e9e128cbc6dc23de, type: 3}
       propertyPath: m_LocalRotation.w
