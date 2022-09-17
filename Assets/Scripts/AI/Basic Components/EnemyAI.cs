@@ -30,6 +30,8 @@ public class EnemyAI : MonoBehaviour
     public float detectDelay;
     [Tooltip("Head Height Offset")]
     public float headOffset;
+    [Tooltip("Surpised Delay")]
+    public float surpriseDelay;
     [Tooltip("Player Reference")]
     public GameObject player;
     [Tooltip("Obstruction Mask")]
@@ -48,7 +50,9 @@ public class EnemyAI : MonoBehaviour
     Vector3 target;
     float waitTimer;
     float detectionTimer;
+    float surpriseTimer;
     bool movingOn;
+    bool ignorePatrolCheck;
 
     private void OnDisable()
     {
@@ -77,6 +81,7 @@ public class EnemyAI : MonoBehaviour
     private void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
+        ignorePatrolCheck = ignorePatrol;
     }
 
     private void Update()
@@ -85,57 +90,77 @@ public class EnemyAI : MonoBehaviour
 
         if (playerDetected && canSeePlayer)
         {
-            //combat code
+            //stop and shoot at player when within acceptable range, if not within exceptable range get closer, alert other ai after x time
         }
         else if (playerDetected && !canSeePlayer)
         {
-            //have another countdown then go to hunting mode
+            //go to player last seen location and if ai still cant see player have another countdown then go to hunting mode
         }
         else if (playerPartDetected)
         {
-            //investigation code
+            target = player.transform.position;
+            ignorePatrol = true;
+            transform.LookAt(target);
         }
         //AI will move to set points in the order they are listed in patrol points list variable, staying at each point for a set time before moving to the next one
         if (!ignorePatrol)
         {
             Patrolling();
         }
+        //AI will stop patrolling when ignorePatrol is set to true
+        else if (ignorePatrolCheck != ignorePatrol && ignorePatrol) 
+        {
+            Debug.Log("AI was patrolling and should now stop patrolling");
+            StopMoving();
+            ignorePatrolCheck = ignorePatrol;
+        }
     }
 
+    //Send AI to target position
     private void MoveTo()
     {
         agent.SetDestination(target);
     }
 
+    //Sends AI to it's current position
     private void StopMoving()
     {
-        //sets destination to its on position
         agent.SetDestination(transform.position);
     }
 
     private void Patrolling()
     {
-        //when ai gets to patrol point, start waiting
+        //AI will start patrolling when ignorePatrol is set to false
+        if (ignorePatrolCheck != ignorePatrol && !ignorePatrol)
+        {
+            Debug.Log("AI was not patrolling and should now be patrolling");
+            GoToPatrolPoint();
+            ignorePatrolCheck = ignorePatrol;
+        }
+        //AI will start waiting at patrol point when reached
         if (Vector3.Distance(transform.position, target) < 1 && !movingOn)
         {
+            Debug.Log("AI is at a patrol point and is not moving on");
             waitTimer -= Time.deltaTime;
         }
-        //once ai has waited x time, go to next patrol point
+        //When AI has waited for full delay
         if (Vector3.Distance(transform.position, target) < 1 && waitTimer <= 0)
         {
+            Debug.Log("AI is at a patrol point and the wait timer is at or below 0");
             movingOn = true;
             NextPatrolPoint();
             GoToPatrolPoint();
         }
-        //once ai is not at patrol point, reset wait timer
+        //When AI has left patrol point, reset timer and movingOn
         if (Vector3.Distance(transform.position, target) > 1 && movingOn)
         {
+            Debug.Log("AI is not at a patrol point and is moving on");
             movingOn = false;
             waitTimer = patrolPointWait;
         }
     }
 
-    //sends AI to next patrol point
+    //Sends AI to next patrol point
     private void GoToPatrolPoint()
     {
         target = patrolPoints[patrolPointIndex].position;

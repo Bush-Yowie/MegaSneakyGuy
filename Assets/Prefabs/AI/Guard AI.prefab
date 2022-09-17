@@ -1483,7 +1483,7 @@ GameObject:
   - component: {fileID: 646711436104180218}
   m_Layer: 0
   m_Name: Guard AI
-  m_TagString: Untagged
+  m_TagString: AI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1534,12 +1534,17 @@ MonoBehaviour:
   patrolPointWait: 3.5
   patrolPointIndex: 0
   agent: {fileID: 0}
-  patrolPoints: []
+  patrolPoints:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   ignorePatrol: 0
   visAngle: 70
   visRange: 10
   visDelay: 0.2
-  detectDelay: 0
+  detectDelay: 3
   headOffset: 1.7
   player: {fileID: 0}
   obMask:
@@ -1551,6 +1556,7 @@ MonoBehaviour:
   headPos: {x: 0, y: 0, z: 0}
   canSeePlayer: 0
   playerDetected: 0
+  playerPartDetected: 0
 --- !u!195 &646711436104180218
 NavMeshAgent:
   m_ObjectHideFlags: 0
