@@ -51,6 +51,7 @@ public class EnemyAI : MonoBehaviour
     float waitTimer;
     float detectionTimer;
     float surpriseTimer;
+    int investigationState;
     bool movingOn;
     bool ignorePatrolCheck;
 
@@ -98,9 +99,21 @@ public class EnemyAI : MonoBehaviour
         }
         else if (playerPartDetected)
         {
-            target = player.transform.position;
-            ignorePatrol = true;
-            transform.LookAt(target);
+            //investigationState = 0;
+             
+            //switch (investigationState)
+            {
+                //case 0:
+                  //  target = player.transform.position;
+                    ignorePatrol = true;
+                  //  transform.LookAt(target);
+                   // break;
+
+              //  case 1:
+
+                  //  break;
+            }
+            
         }
         //AI will move to set points in the order they are listed in patrol points list variable, staying at each point for a set time before moving to the next one
         if (!ignorePatrol)

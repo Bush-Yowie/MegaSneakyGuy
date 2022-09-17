@@ -155,6 +155,7 @@ MonoBehaviour:
   visDelay: 0.2
   detectDelay: 5
   headOffset: 1.7
+  surpriseDelay: 0
   player: {fileID: 0}
   obMask:
     serializedVersion: 2
@@ -1351,7 +1352,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 76cd8e1cf3033184ca95dba70a27d72d, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -3.46
+      value: -7.24
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 76cd8e1cf3033184ca95dba70a27d72d, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1359,7 +1360,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 76cd8e1cf3033184ca95dba70a27d72d, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.65
+      value: -0.74
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 76cd8e1cf3033184ca95dba70a27d72d, type: 3}
       propertyPath: m_LocalRotation.w
@@ -2293,20 +2294,8 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1859066705557103271, guid: 6328a6475eb80644e9e128cbc6dc23de, type: 3}
-      propertyPath: player
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 1859066705557103271, guid: 6328a6475eb80644e9e128cbc6dc23de, type: 3}
       propertyPath: detectDelay
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 1859066705557103271, guid: 6328a6475eb80644e9e128cbc6dc23de, type: 3}
-      propertyPath: ignorePatrol
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1859066705557103271, guid: 6328a6475eb80644e9e128cbc6dc23de, type: 3}
-      propertyPath: patrolPoints.Array.size
-      value: 5
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1859066705557103271, guid: 6328a6475eb80644e9e128cbc6dc23de, type: 3}
       propertyPath: patrolPoints.Array.data[0]
@@ -2328,10 +2317,6 @@ PrefabInstance:
       propertyPath: patrolPoints.Array.data[4]
       value: 
       objectReference: {fileID: 232973006}
-    - target: {fileID: 1859066705557103271, guid: 6328a6475eb80644e9e128cbc6dc23de, type: 3}
-      propertyPath: patrolPoints.Array.data[5]
-      value: 
-      objectReference: {fileID: 232973006}
     - target: {fileID: 6336820629087800969, guid: 6328a6475eb80644e9e128cbc6dc23de, type: 3}
       propertyPath: m_Name
       value: Guard AI
@@ -2342,7 +2327,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6681996479929062451, guid: 6328a6475eb80644e9e128cbc6dc23de, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 5.628
+      value: 2.05
       objectReference: {fileID: 0}
     - target: {fileID: 6681996479929062451, guid: 6328a6475eb80644e9e128cbc6dc23de, type: 3}
       propertyPath: m_LocalPosition.y
@@ -2350,7 +2335,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6681996479929062451, guid: 6328a6475eb80644e9e128cbc6dc23de, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 6.625
+      value: 2.02
       objectReference: {fileID: 0}
     - target: {fileID: 6681996479929062451, guid: 6328a6475eb80644e9e128cbc6dc23de, type: 3}
       propertyPath: m_LocalRotation.w
