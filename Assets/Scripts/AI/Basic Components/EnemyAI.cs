@@ -98,20 +98,42 @@ public class EnemyAI : MonoBehaviour
             //go to player last seen location and if ai still cant see player have another countdown then go to hunting mode
         }
         else if (playerPartDetected)
-        {
-            //investigationState = 0;
-             
-            //switch (investigationState)
+        { 
+            switch (investigationState)
             {
-                //case 0:
-                  //  target = player.transform.position;
+                //when entering investigation state, stop patrolling and look at player for x time
+                case 0:
+                    Debug.Log("INVESTIGATION STATE: STOPPED PATROL, LOOKING AT PLAYER");
+
                     ignorePatrol = true;
-                  //  transform.LookAt(target);
-                   // break;
 
-              //  case 1:
+                    // looks at player while player in fov
+                    if (canSeePlayer)
+                    {
+                        target = player.transform.position + new Vector3(0, headOffset, 0);
+                        transform.LookAt(target);
+                    }
+                    else
+                    {
+                        investigationState = 1;
+                    }
+                    break;
 
-                  //  break;
+                case 1:
+                    Debug.Log("INVESTIGATION STATE: GOING TO PLAYER LAST KNOWN POSITION");
+
+                    surpriseTimer = surpriseDelay;
+
+                    //moves to last known player position then looks 180 degrees around
+                    if (Vector3.Distance(transform.position, target) > 1)
+                    {
+                        MoveTo();
+                    }
+                    else
+                    {
+                        //slowly look right then left then if AI still hasnt seen anything go back to patrolling
+                    }
+                    break;
             }
             
         }
@@ -252,13 +274,11 @@ public class EnemyAI : MonoBehaviour
             Debug.Log("Player is in an AI's fov, counting down");
         }
         //if player leaves AI fov but timer has ticked down a reasonable amount, AI will investigate
-        if (detectionTimer <= detectDelay - visDelay * 2 && !canSeePlayer && !playerDetected)
+        if (detectionTimer <= detectDelay - visDelay * 8 && !playerDetected)
         {
             Debug.Log("Player has been in an AI's fov for long enough to make the AI investigate");
             playerPartDetected = true;
-
-            //reset timer when partially spotted
-            detectionTimer = detectDelay;
+            investigationState = 0;
         }
         //if player in AI fov for full timer, go to combat state, ignore investigation state
         if (detectionTimer <= 0 && !playerDetected)
@@ -267,10 +287,11 @@ public class EnemyAI : MonoBehaviour
             playerDetected = true;
             playerPartDetected = false;
 
-            //reset timer when player is spotted
+            //reset timers when player is spotted
             detectionTimer = detectDelay;
+            surpriseTimer = surpriseDelay;
         }
-        //reset timer if timer player was in an AI's fov for long enough to trigger the timer but not long enough to trigger being spotted partially or fully (Imagine like coyote time for staying hidden) 
+        //reset timer if player was in an AI's fov for long enough to trigger the timer but not long enough to trigger being spotted partially or fully (Imagine like coyote time for staying hidden) 
         if (detectionTimer < detectDelay && !playerDetected && !playerPartDetected && !canSeePlayer)
         {
             detectionTimer = detectDelay;
