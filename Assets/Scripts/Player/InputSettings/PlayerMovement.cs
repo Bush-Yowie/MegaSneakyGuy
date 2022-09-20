@@ -31,6 +31,7 @@ public class PlayerMovement : MonoBehaviour
     private bool ray_hit_something = false;
 
 
+
     private void Awake()
     {
         rb = this.GetComponent<Rigidbody>();
@@ -38,9 +39,6 @@ public class PlayerMovement : MonoBehaviour
         playerActionsAsset.Player.Crouch.performed += context => crouch();
         playerActionsAsset.Player.UnCrouch.performed += context => UnCrouch();
         playerActionsAsset.Player.Attack.performed += context => Shoot();
-        //playerActionsAsset.Player.Aim.performed += context => Aim();
-        //playerActionsAsset.Player.Aim.realse 
-
 
         _vcams[1].SetActive(false);
 
@@ -61,6 +59,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
+
+
         forceDirection += move.ReadValue<Vector2>().x * GetCameraRight(playerCamera) * movementForce;
         forceDirection += move.ReadValue<Vector2>().y * GetCameraForward(playerCamera) * movementForce;
 
@@ -94,6 +94,8 @@ public class PlayerMovement : MonoBehaviour
             {
                 transform.LookAt(hit.point);
             }
+
+
         }
         else
         {
@@ -102,7 +104,6 @@ public class PlayerMovement : MonoBehaviour
             Debug.Log("NotAming");
             playerActionsAsset.Player.Aim.performed += context => Aim();
         }
-
 
 
 
