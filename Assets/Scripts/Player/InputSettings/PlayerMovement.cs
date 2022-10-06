@@ -39,6 +39,8 @@ public class PlayerMovement : MonoBehaviour
         playerActionsAsset.Player.Crouch.performed += context => crouch();
         playerActionsAsset.Player.UnCrouch.performed += context => UnCrouch();
         playerActionsAsset.Player.Attack.performed += context => Shoot();
+        playerActionsAsset.Player.Aim.performed += context => Aim();
+        playerActionsAsset.Player.Aim.canceled += context => aiming = false;
 
         _vcams[1].SetActive(false);
 
@@ -97,12 +99,11 @@ public class PlayerMovement : MonoBehaviour
 
 
         }
-        else
-        {
 
+        if (aiming == false)
+        {
             _vcams[1].SetActive(false);
             Debug.Log("NotAming");
-            playerActionsAsset.Player.Aim.performed += context => Aim();
         }
 
 
@@ -117,11 +118,11 @@ public class PlayerMovement : MonoBehaviour
     private void Aim()
     {
         aiming = true;
-        for (int i = 0; i <_vcams.Length; i++)
-        {
+       // for (int i = 0; i <_vcams.Length; i++)
+       // {
             _vcams[1].SetActive(true);
 
-        }
+       // }
         Debug.Log("Aim");
 
     }
