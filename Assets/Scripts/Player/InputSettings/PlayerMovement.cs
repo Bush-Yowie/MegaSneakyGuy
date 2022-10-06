@@ -61,8 +61,6 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-
-
         forceDirection += move.ReadValue<Vector2>().x * GetCameraRight(playerCamera) * movementForce;
         forceDirection += move.ReadValue<Vector2>().y * GetCameraForward(playerCamera) * movementForce;
 
@@ -79,11 +77,6 @@ public class PlayerMovement : MonoBehaviour
 
         if (aiming == true)
         {
-            if (aiming == true)
-            {
-                playerActionsAsset.Player.Aim.performed += context => aiming = false;
-                playerActionsAsset.Player.Aim.performed += context => maxspeed = 5;
-            }
             maxspeed = 0;
             Debug.Log("aiming");
 
@@ -100,10 +93,12 @@ public class PlayerMovement : MonoBehaviour
 
         }
 
-        if (aiming == false)
+        else
+        //if (aiming == false)
         {
             _vcams[1].SetActive(false);
-            Debug.Log("NotAming");
+            Debug.Log("NotAiming");
+            maxspeed = 5;
         }
 
 
@@ -118,11 +113,7 @@ public class PlayerMovement : MonoBehaviour
     private void Aim()
     {
         aiming = true;
-       // for (int i = 0; i <_vcams.Length; i++)
-       // {
-            _vcams[1].SetActive(true);
-
-       // }
+        _vcams[1].SetActive(true);
         Debug.Log("Aim");
 
     }
