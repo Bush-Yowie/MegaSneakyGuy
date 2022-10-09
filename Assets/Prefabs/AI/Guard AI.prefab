@@ -1481,6 +1481,7 @@ GameObject:
   - component: {fileID: 3269746915814892654}
   - component: {fileID: 1859066705557103271}
   - component: {fileID: 646711436104180218}
+  - component: {fileID: 3807987035730478118}
   m_Layer: 0
   m_Name: Guard AI
   m_TagString: AI
@@ -1580,6 +1581,20 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &3807987035730478118
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6336820629087800969}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9b2954e0ddc05d4381a17731e130493, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 0
+  maxhealth: 40
 --- !u!1 &6426253366295343518
 GameObject:
   m_ObjectHideFlags: 0
